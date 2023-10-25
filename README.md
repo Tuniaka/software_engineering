@@ -11,6 +11,7 @@ SpeechRecognition - это библиотека для распознавани�
 
 ### Пример использования
 
+```python
 import speech_recognition as sr
 
 recognizer = sr.Recognizer()
