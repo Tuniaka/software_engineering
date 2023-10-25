@@ -1,6 +1,4 @@
 import speech_recognition as sr
-import os
-import sys
 
 def command():
 	recognizer = sr.Recognizer()
@@ -14,7 +12,6 @@ def command():
 	except sr.UnknownValueError:
 		print("Речь не распознана")
 		text = command()
-	return text
 
 if __name__ == "__main__":
 	command()
