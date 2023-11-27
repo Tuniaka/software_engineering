@@ -10,10 +10,11 @@ def on_copy_click(text):
 
 def command():
 	recognizer = sr.Recognizer()
+	recognizer.dynamic_energy_threshold = False
 	with sr.Microphone() as source:
 		st.write(f"Слушаю голос...")
 		recognizer.adjust_for_ambient_noise(source, duration=1)
-		audio = recognizer.listen(source)
+		audio = recognizer.listen(source, timeout=5.0)
 	try:
 		text = recognizer.recognize_google(audio, language="ru-RU")
 		return text
