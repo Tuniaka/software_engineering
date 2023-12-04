@@ -1,7 +1,7 @@
 ## Участники команды
 - Безлепкин Даниил
 - Войнов Артём
-- Хусаинова Александра 
+- Хусаинова Александра
 
 Библиотека: https://pypi.org/project/SpeechRecognition/
 
@@ -19,3 +19,10 @@ with sr.Microphone() as source:
 	audio = recognizer.listen(source)
 text = recognizer.recognize_google(audio, language="ru-RU")
 print(text)
+```
+
+### Запуск Docker
+```bash
+cd api/ && make build && make run
+```
+Сервер будет запущен по адресу ```http://0.0.0.0:8080```
