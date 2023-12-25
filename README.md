@@ -20,6 +20,18 @@ with sr.Microphone() as source:
 text = recognizer.recognize_google(audio, language="ru-RU")
 print(text)
 ```
+### Архитектура проекта
+#### WEB
+Для реализации используется библиотека streamlit версии 1.29.0
+
+#### API
+Для реализации используется библиотека FastAPI версии 0.87.0
+
+#### CI/CD
+CI/CD реализован на базе `GitHub Actions`, запуск происходит при каждом `push` в репозиторий
+
+#### Dependencies
+Зависимости для модуля `API` описаны в файле `requirements.txt`, при запуске `Dockerfile` он парсится и подгружаются пакеты нужной версии
 
 ### Запуск Docker
 ```bash
