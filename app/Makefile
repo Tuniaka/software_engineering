@@ -8,4 +8,4 @@ push:
 	docker push $(DOCKER_IMAGE_NAME)
 
 run:
-	docker run --rm -e PORT=8080 -p 8080:8080 $(DOCKER_IMAGE_NAME)
+	docker run --rm -it --device /dev/snd:/dev/snd -p 8501:8501 $(DOCKER_IMAGE_NAME)
