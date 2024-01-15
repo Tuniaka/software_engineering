@@ -2,6 +2,8 @@ FROM python:3.10
 
 WORKDIR /api
 
+RUN apt-get update && apt-get install -y \
+    portaudio19-dev
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
