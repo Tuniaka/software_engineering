@@ -14,7 +14,7 @@ import sys
 if __name__ == "__main__":
     """
     @brief Запускает веб-приложение Streamlit с определенными параметрами.
-    
+
     Устанавливает аргументы командной строки для запуска Streamlit с указанным портом и адресом сервера.
     """
     sys.argv = ["streamlit", "run", "web.py", "--server.port=8501", "--server.address=0.0.0.0"]

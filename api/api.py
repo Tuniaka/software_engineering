@@ -5,7 +5,8 @@
 @author Rayzedan, sard-nas, Tuniaka
 @date May 2024
 
-Этот код представляет собой простой веб-сервер с использованием FastAPI для распознавания речи через микрофон с помощью библиотеки SpeechRecognition.
+Этот код представляет собой простой веб-сервер с использованием FastAPI для распознавания речи через микрофон
+с помощью библиотеки SpeechRecognition.
 """
 
 import speech_recognition as sr
@@ -13,20 +14,23 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+
 @app.get("/")
 async def read_root():
     """
     @brief Возвращает сообщение "Распознавание речи".
-    
+
     @return Словарь с сообщением.
     """
     return {"message": "Распознавание речи"}
 
+
 @app.get("/record")
 async def record_voice():
     """
-    @brief Записывает речь с микрофона, пытается распознать ее с помощью Google Speech Recognition API на русском языке и возвращает распознанный текст или сообщение об ошибке.
-    
+    @brief Записывает речь с микрофона, пытается распознать ее с помощью Google Speech Recognition API на русском языке
+    и возвращает распознанный текст или сообщение об ошибке.
+
     @return Словарь с распознанным текстом или сообщением об ошибке.
     """
     recognizer = sr.Recognizer()

@@ -15,7 +15,7 @@ from api import app
 if __name__ == "__main__":
     """
     @brief Запускает веб-сервер с использованием Uvicorn.
-    
+
     Сервер будет запущен на хосте "0.0.0.0" и порту, указанном в переменной окружения PORT (по умолчанию 8080).
     """
     uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", "8080")), log_level="info")
