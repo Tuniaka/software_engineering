@@ -12,6 +12,9 @@
 import speech_recognition as sr
 import streamlit as st
 import pyperclip
+import base64
+import time
+
 
 class SpeechRecognition:
     def __init__(self):
@@ -36,6 +39,7 @@ class SpeechRecognition:
             print('Неизвестная ошибка: {}'.format(error))
             return "Ошибка: неизвестная ошибка"
 
+
 class VoiceRecognitionApp:
     def __init__(self):
         self.speech_recognition = SpeechRecognition()
@@ -48,6 +52,20 @@ class VoiceRecognitionApp:
         """
         pyperclip.copy(text)
         st.toast(f"Скопировано в буфер обмена: {text}", icon='✅')
+
+    def on_save_click(self, text):
+        """
+        @brief Копирует текст в файл и предоставляет ссылку для скачивания файла.
+
+        @param text: Текст для копирования.
+        """
+        b64 = base64.b64encode(text.encode()).decode()
+        filename = "recognized_text"
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+        new_filename = "{}_{}_.txt".format(filename, timestr)
+        st.markdown("#### Загрузка файла ###")
+        href = f'<a href="data:file/txt;base64,{b64}" download="{new_filename}">Ссылка для скачивания</a>'
+        st.markdown(href, unsafe_allow_html=True)
 
     def command(self):
         """
@@ -71,9 +89,11 @@ class VoiceRecognitionApp:
             text = self.command()
             if text:
                 st.write("Текст:", text)
-                st.button("📋", on_click=self.on_copy_click, args=(text,))
-            else:
-                st.write("Ошибка: речь не распознана")
+                right, left = st.columns([1, 6])
+                with right:
+                    st.button("📋", on_click=self.on_copy_click, args=(text,))
+                with left:
+                    st.button("📥", on_click=self.on_save_click, args=(text,))
 
 
 if __name__ == '__main__':
