@@ -35,11 +35,14 @@ async def record_voice():
     """
     recognizer = sr.Recognizer()
     with sr.Microphone() as source:
-        audio = recognizer.listen(source, timeout=5.0)
-    try:
-        text = recognizer.recognize_google(audio, language="ru-RU")
-        return {"text": text}
-    except sr.UnknownValueError:
-        return {"error": "Речь не распознана"}
-    except BaseException:
-        return {"error": "Неизвестная ошибка: error"}
+        try:
+            audio = recognizer.listen(source, timeout=5.0)
+        except sr.WaitTimeoutError:
+            return {"error": "Речь не распознана"}
+        try:
+            text = recognizer.recognize_google(audio, language="ru-RU")
+            return {"text": text}
+        except sr.UnknownValueError:
+            return {"error": "Речь не распознана"}
+        except BaseException:
+            return {"error": "Неизвестная ошибка: error"}

@@ -78,5 +78,22 @@ class TestSpeechRecognition(unittest.TestCase):
         self.assertEqual(response.json(), {'error': 'Неизвестная ошибка: error'})
 
 
+    @patch('api.api.sr.Microphone')
+    @patch('api.api.sr.Recognizer.listen')
+    @patch('api.api.sr.Recognizer.recognize_google')
+    def test_record_voice_timeout(self, mock_recognize_google, mock_listen, mock_microphone):
+        """
+        @brief Тестирование таймаута при записи речи.
+
+        Проверяет, что при таймауте записи речи возвращается ошибка и статус 200.
+        """
+        mock_listen.side_effect = sr.WaitTimeoutError('Timeout while listening')
+
+        response = self.client.get('/record')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {'error': 'Речь не распознана'})
+
+
 if __name__ == '__main__':
     unittest.main()
