@@ -29,7 +29,10 @@ class SpeechRecognition:
         @return Распознанный текст или сообщение об ошибке.
         """
         self.recognizer.adjust_for_ambient_noise(source, duration=1)
-        audio = self.recognizer.listen(source, timeout=5.0)
+        try:
+            audio = self.recognizer.listen(source, timeout=5.0)
+        except sr.WaitTimeoutError:
+            return "Речь не распознана"
         try:
             text = self.recognizer.recognize_google(audio, language="ru-RU")
             return text
@@ -88,12 +91,15 @@ class VoiceRecognitionApp:
         if st.button("Записать голос"):
             text = self.command()
             if text:
-                st.write("Текст:", text)
-                right, left = st.columns([1, 6])
-                with right:
-                    st.button("📋", on_click=self.on_copy_click, args=(text,))
-                with left:
-                    st.button("📥", on_click=self.on_save_click, args=(text,))
+                if (text == "Речь не распознана"):
+                    st.write("Ошибка:", text)
+                else:
+                    st.write("Текст:", text)
+                    right, left = st.columns([1, 6])
+                    with right:
+                        st.button("📋", on_click=self.on_copy_click, args=(text,))
+                    with left:
+                        st.button("📥", on_click=self.on_save_click, args=(text,))
 
 
 if __name__ == '__main__':
